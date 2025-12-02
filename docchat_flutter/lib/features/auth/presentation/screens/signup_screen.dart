@@ -48,8 +48,14 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final authState = ref.watch(authProvider);
     final isLoading = authState.status == AuthStatus.loading;
 
-    // Show error message if any
+    // Listen for auth state changes and navigate on success
     ref.listen<AuthState>(authProvider, (previous, next) {
+      // Navigate to authenticated home screen on successful authentication
+      if (next.status == AuthStatus.authenticated && previous?.status != AuthStatus.authenticated) {
+        context.go('/home-auth');
+      }
+      
+      // Show error message if any
       if (next.status == AuthStatus.error && next.errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

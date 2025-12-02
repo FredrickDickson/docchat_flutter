@@ -56,7 +56,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
     switch (index) {
       case 0:
-        context.go('/');
+        context.go('/home-auth');
         break;
       case 1:
         break;

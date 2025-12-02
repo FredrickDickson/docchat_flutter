@@ -33,6 +33,7 @@ dependencies:
   # File Handling
   file_picker: ^8.1.2
   path_provider: ^2.1.4
+  image_picker: ^1.1.2
   
   # Authentication
   google_sign_in: ^6.2.1

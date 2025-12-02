@@ -48,9 +48,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     // Listen for auth state changes and navigate on success
     ref.listen<AuthState>(authProvider, (previous, next) {
-      // Navigate to dashboard on successful authentication
+      // Navigate to authenticated home screen on successful authentication
       if (next.status == AuthStatus.authenticated && previous?.status != AuthStatus.authenticated) {
-        context.go('/dashboard');
+        context.go('/home-auth');
       }
       
       // Show error snackbar as backup (in addition to inline error)

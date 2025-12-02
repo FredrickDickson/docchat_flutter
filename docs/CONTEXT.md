@@ -1576,3 +1576,98 @@ app.post("/api/summarize", async (req, res) => {
 ✅ Full project folder structure
 
 Just tell me: **“Generate the full backend architecture.”**
+
+
+Here’s a complete, production-ready screen list for a modern PDF SaaS like DocChat, ChatPDF, AskYourPDF, etc., based on the best apps in this category in 2025 (including the screenshots you just shared).
+
+### 1. Authentication & Onboarding Flow
+1. Landing / Marketing Page (optional if you have a separate website)
+2. Sign-up / Create Account
+   - Continue with Google / Apple
+   - Email + Password
+3. Log In
+4. Welcome / Quick Onboarding (3–4 slides or modal)
+   - “Upload → Ask → Get answers” carousel
+5. Pricing / Choose Plan (show this early for free users)
+   - Free tier vs Pro tier comparison
+   - “Get Started” (Free) vs “Choose Pro”
+
+### 2. Core Screens (Logged-in)
+6. Main Dashboard / Home
+   - List of “My Documents” (with thumbnails, file name, size, upload date, delete button)
+   - Big “+ Upload Document” CTA
+   - Quick stats (documents used this month, pages left, etc.)
+   - Upgrade banner if on free plan
+
+7. Upload Screen
+   - Drag & drop zone OR “Select Document” button
+   - Supported formats + max size notice
+   - Live upload progress list (multiple files at once)
+   - Cancel individual uploads
+
+8. Document Detail / Chat Screen (the money screen)
+   - Top bar: document name + three-dot menu (Rename, Download, Delete, Share)
+   - Left side or top: PDF viewer (page thumbnails + zoom)
+   - Right side (or full on mobile): chat interface
+     - AI initial message: “Hello! I’ve read your document. How can I help?”
+     - Message bubbles
+     - Input bar with suggested quick questions (“Summarize”, “Key findings”, etc.)
+     - Send button
+   - Sources / citations chips under AI answers (click → jumps to page)
+
+9. New Chat with Same Document
+   - Option to start a fresh conversation with the same PDF
+
+### 3. Account & Settings
+10. Settings (hamburger or profile icon)
+    - Profile (name, email, photo)
+    - Subscription / Manage Plan
+    - Appearance (Dark mode toggle)
+    - Notifications (push, email)
+    - API Keys (if you offer API)
+    - Help Center
+    - Contact Us (form or email)
+    - Privacy Policy
+    - Terms of Service
+    - Log Out
+    - Delete Account (GDPR)
+
+### 4. Supporting Screens
+11. Pricing Page (again, accessible from anywhere)
+12. Payment / Checkout (Stripe elements)
+    - Card form
+    - Success → redirect back to dashboard with “Pro activated” toast
+13. Contact Us / Support Form
+14. Empty States
+    - No documents yet → big upload CTA
+    - No chats yet for a document
+15. Error & Success Toasts / Modals
+    - File too big, wrong format, upload failed, etc.
+16. Loading States
+    - Document processing (“Analyzing your PDF… this can take 10–60 seconds”)
+
+### 5. Mobile-Specific (very important – most users are mobile)
+- Bottom navigation bar: Home | Documents | Upload | Settings
+- Collapsed PDF viewer + chat slides up
+- Pull-to-refresh on document list
+- All screens must work perfectly in portrait
+
+### 6. Nice-to-have / Growth Screens
+- Share document link (read-only public link with password option)
+- Export chat as PDF or text
+- Folder / Collections organization
+- Search across all documents
+- Usage dashboard (pages processed, documents uploaded, etc.)
+
+### Recommended Tech Stack for Fast MVP (what most successful PDF SaaS use in 2025)
+- Frontend: Next.js 14 + Tailwind + shadcn/ui (or React Native for mobile)
+- PDF rendering: PDF.js or @pqina/vue-pdf (fastest)
+- Backend: Node.js/NestJS or Python/FastAPI
+- Vector DB: Pinecone, Qdrant, or Supabase pgvector
+- LLM: OpenAI gpt-4o + LangChain/LlamaIndex, or Claude 3.5 Sonnet
+- Storage: AWS S3 or Cloudflare R2
+- Auth: Clerk, Supabase Auth, or Firebase
+
+You can launch a very competitive product with just screens 1–9 + 10 + 13 in the first 4–6 weeks.
+
+Let me know if you want Figma wireframes, a clickable prototype structure, or the exact user flow diagram!

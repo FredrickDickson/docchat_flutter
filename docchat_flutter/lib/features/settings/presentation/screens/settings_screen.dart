@@ -194,7 +194,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     switch (index) {
       case 0:
-        context.go('/');
+        context.go('/home-auth');
         break;
       case 1:
         context.go('/dashboard');
