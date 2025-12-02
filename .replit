@@ -1,0 +1,7 @@
+modules = ["cpp-clang14", "swift-5.8", "python-3.11"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["flutter", "chromium"]
