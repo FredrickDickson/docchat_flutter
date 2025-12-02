@@ -13,6 +13,7 @@ import '../../features/home/presentation/screens/terms_screen.dart';
 import '../../features/home/presentation/screens/contact_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/settings/presentation/screens/subscription_screen.dart';
 import '../../features/documents/presentation/screens/document_upload_screen.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import 'router_refresh_notifier.dart';
@@ -150,6 +151,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const AuthenticatedHomeScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/subscription',
+        name: 'subscription',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SubscriptionScreen(),
         ),
       ),
     ],

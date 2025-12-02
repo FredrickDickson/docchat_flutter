@@ -30,7 +30,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       body: ListView(
         children: [
           const SizedBox(height: AppDimensions.spacing16),
-          
           _buildSectionHeader(context, 'Appearance'),
           ListTile(
             leading: Icon(
@@ -45,9 +44,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               },
             ),
           ),
-          
           const Divider(height: AppDimensions.spacing32),
-          
           _buildSectionHeader(context, 'Account'),
           ListTile(
             leading: Icon(
@@ -65,15 +62,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             title: const Text('Subscription'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Subscription settings coming soon')),
-              );
-            },
+            onTap: () => context.go('/subscription'),
           ),
-          
           const Divider(height: AppDimensions.spacing32),
-          
           _buildSectionHeader(context, 'Notifications'),
           SwitchListTile(
             secondary: Icon(
@@ -84,7 +75,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             value: true,
             onChanged: (value) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Notification settings coming soon')),
+                const SnackBar(
+                    content: Text('Notification settings coming soon')),
               );
             },
           ),
@@ -97,13 +89,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Email notification settings coming soon')),
+                const SnackBar(
+                    content: Text('Email notification settings coming soon')),
               );
             },
           ),
-          
           const Divider(height: AppDimensions.spacing32),
-          
           _buildSectionHeader(context, 'Support & Legal'),
           ListTile(
             leading: Icon(
@@ -145,9 +136,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             trailing: const Icon(Icons.open_in_new),
             onTap: () => context.go('/terms'),
           ),
-          
           const SizedBox(height: AppDimensions.spacing32),
-          
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AppDimensions.paddingMD,
@@ -165,9 +154,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: const Text('Log Out'),
             ),
           ),
-          
           const SizedBox(height: AppDimensions.spacing16),
-          
           Center(
             child: Text(
               'DocChat v1.0.0',
@@ -176,7 +163,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
           ),
-          
           const SizedBox(height: AppDimensions.spacing32),
         ],
       ),
@@ -216,9 +202,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.primary,
-        ),
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.primary,
+            ),
       ),
     );
   }

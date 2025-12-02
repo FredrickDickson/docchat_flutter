@@ -224,13 +224,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         onPressed: () => _showLogoutDialog(context, theme),
-                        icon: const Icon(Icons.logout, color: Colors.red),
-                        label: const Text(
-                          'Log Out',
-                          style: TextStyle(color: Colors.red),
-                        ),
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Log Out'),
                         style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.red),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                       ),
@@ -562,9 +558,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               Navigator.of(dialogContext).pop();
               context.go('/');
             },
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
             child: const Text('Log Out'),
           ),
         ],

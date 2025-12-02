@@ -11,6 +11,11 @@ class EnvConfig {
   static String get openAiApiKey => dotenv.env['OPENAI_API_KEY'] ?? '';
   static String get deepSeekApiKey => dotenv.env['DEEPSEEK_API_KEY'] ?? '';
 
+  // Paystack
+  static String get paystackPublicKey => dotenv.env['PAYSTACK_PUBLIC_KEY'] ?? '';
+  static String get paystackSecretKey => dotenv.env['PAYSTACK_SECRET_KEY'] ?? '';
+  static bool get usePaystackTestMode => isDevelopment || dotenv.env['PAYSTACK_TEST_MODE'] == 'true';
+
   // App
   static String get appName => dotenv.env['APP_NAME'] ?? 'DocChat';
   static String get appVersion => dotenv.env['APP_VERSION'] ?? '1.0.0';

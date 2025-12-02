@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../../auth/presentation/providers/auth_state.dart';
 import '../providers/documents_provider.dart';
 import '../widgets/upload_dropzone.dart';
 
@@ -59,9 +61,13 @@ class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
       _currentNavIndex = index;
     });
 
+    final authState = ref.read(authProvider);
+    final isAuthenticated = authState.status == AuthStatus.authenticated;
+
     switch (index) {
       case 0:
-        context.go('/');
+        // Navigate to authenticated home if logged in, otherwise public home
+        context.go(isAuthenticated ? '/home-auth' : '/');
         break;
       case 1:
         context.go('/dashboard');
