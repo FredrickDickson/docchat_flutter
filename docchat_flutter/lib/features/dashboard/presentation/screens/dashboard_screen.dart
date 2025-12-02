@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../shared/widgets/theme_toggle_widget.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
@@ -7,7 +8,6 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../documents/presentation/providers/documents_provider.dart';
 import '../../../documents/presentation/widgets/document_list.dart';
 
-/// Dashboard screen showing documents list
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
@@ -16,7 +16,7 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  int _currentNavIndex = 1; // Documents tab
+  int _currentNavIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +36,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           const SizedBox(width: AppDimensions.spacing8),
         ],
       ),
-      body: DocumentList(),
+      body: const DocumentList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _handleUpload(),
-        child: const Icon(Icons.add),
         tooltip: 'Upload Document',
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentNavIndex,
@@ -54,19 +54,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       _currentNavIndex = index;
     });
 
-    // Navigate to different screens based on index
     switch (index) {
-      case 0: // Home
-        // TODO: Navigate to home
+      case 0:
+        context.go('/');
         break;
-      case 1: // Documents
-        // Already here
+      case 1:
         break;
-      case 2: // Upload
-        _handleUpload();
+      case 2:
+        context.go('/upload');
         break;
-      case 3: // Settings
-        // TODO: Navigate to settings
+      case 3:
+        context.go('/settings');
         break;
     }
   }

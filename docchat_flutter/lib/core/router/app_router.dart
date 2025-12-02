@@ -11,9 +11,11 @@ import '../../features/home/presentation/screens/privacy_screen.dart';
 import '../../features/home/presentation/screens/terms_screen.dart';
 import '../../features/home/presentation/screens/contact_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/documents/presentation/screens/document_upload_screen.dart';
+import '../../features/chat/presentation/screens/chat_screen.dart';
 import 'router_refresh_notifier.dart';
 
-/// App router provider
 final routerProvider = Provider<GoRouter>((ref) {
   final notifier = ref.watch(routerRefreshNotifierProvider);
   
@@ -34,17 +36,14 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       final isAuthRoute = location == '/login' || location == '/signup';
 
-      // If authenticated and trying to access auth routes, redirect to dashboard
       if (isAuthenticated && isAuthRoute) {
         return '/dashboard';
       }
 
-      // If not authenticated and trying to access a protected route, send to login
       if (!isAuthenticated && !isPublicRoute) {
         return '/login';
       }
 
-      // No redirect needed
       return null;
     },
     routes: [
@@ -79,6 +78,37 @@ final routerProvider = Provider<GoRouter>((ref) {
           key: state.pageKey,
           child: const DashboardScreen(),
         ),
+      ),
+      GoRoute(
+        path: '/upload',
+        name: 'upload',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const DocumentUploadScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/settings',
+        name: 'settings',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SettingsScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/chat',
+        name: 'chat',
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return MaterialPage(
+            key: state.pageKey,
+            child: ChatScreen(
+              initialSessionId: extra?['sessionId'] as String?,
+              documentId: extra?['documentId'] as String?,
+              title: extra?['title'] as String?,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: '/privacy',

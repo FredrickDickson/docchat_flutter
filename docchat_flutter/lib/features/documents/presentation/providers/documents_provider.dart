@@ -1,27 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:file_picker/file_picker.dart';
+import '../../../../core/config/supabase_config.dart';
 import '../../../../core/utils/logger.dart';
 import '../../data/repositories/document_repository.dart';
 import '../../domain/entities/document.dart';
 import '../../domain/repositories/document_repository_interface.dart';
 
-/// Document repository provider
 final documentRepositoryProvider = Provider<DocumentRepositoryInterface>((ref) {
   return DocumentRepository();
 });
 
-/// Documents list state
 class DocumentsState {
   final List<Document> documents;
   final bool isLoading;
   final String? error;
   final bool hasMore;
+  final bool isAuthenticated;
 
   const DocumentsState({
     this.documents = const [],
     this.isLoading = false,
     this.error,
     this.hasMore = true,
+    this.isAuthenticated = false,
   });
 
   DocumentsState copyWith({
@@ -29,27 +29,43 @@ class DocumentsState {
     bool? isLoading,
     String? error,
     bool? hasMore,
+    bool? isAuthenticated,
   }) {
     return DocumentsState(
       documents: documents ?? this.documents,
       isLoading: isLoading ?? this.isLoading,
       error: error,
       hasMore: hasMore ?? this.hasMore,
+      isAuthenticated: isAuthenticated ?? this.isAuthenticated,
     );
   }
 }
 
-/// Documents provider
 class DocumentsNotifier extends StateNotifier<DocumentsState> {
   final DocumentRepositoryInterface _repository;
 
   DocumentsNotifier(this._repository) : super(const DocumentsState()) {
-    loadDocuments();
+    _init();
   }
 
-  /// Load documents
+  void _init() {
+    final user = SupabaseConfig.currentUser;
+    if (user != null) {
+      state = state.copyWith(isAuthenticated: true);
+      loadDocuments();
+    } else {
+      state = state.copyWith(isAuthenticated: false, isLoading: false);
+    }
+  }
+
   Future<void> loadDocuments() async {
-    state = state.copyWith(isLoading: true, error: null);
+    final user = SupabaseConfig.currentUser;
+    if (user == null) {
+      state = state.copyWith(isAuthenticated: false, isLoading: false);
+      return;
+    }
+
+    state = state.copyWith(isLoading: true, error: null, isAuthenticated: true);
 
     try {
       final documents = await _repository.listDocuments(limit: 20);
@@ -68,19 +84,21 @@ class DocumentsNotifier extends StateNotifier<DocumentsState> {
     }
   }
 
-  /// Refresh documents
   Future<void> refresh() async {
     await loadDocuments();
   }
 
-  /// Upload document
   Future<void> uploadDocument() async {
+    final user = SupabaseConfig.currentUser;
+    if (user == null) {
+      throw Exception('User not authenticated');
+    }
+
     try {
       state = state.copyWith(isLoading: true, error: null);
       
       final document = await _repository.uploadDocument();
       
-      // Add to beginning of list
       final updatedDocs = [document, ...state.documents];
       state = state.copyWith(
         documents: updatedDocs,
@@ -98,12 +116,10 @@ class DocumentsNotifier extends StateNotifier<DocumentsState> {
     }
   }
 
-  /// Delete document
   Future<void> deleteDocument(String documentId) async {
     try {
       await _repository.deleteDocument(documentId);
       
-      // Remove from list
       final updatedDocs = state.documents
           .where((doc) => doc.id != documentId)
           .toList();
@@ -117,7 +133,6 @@ class DocumentsNotifier extends StateNotifier<DocumentsState> {
     }
   }
 
-  /// Load more documents (pagination)
   Future<void> loadMore() async {
     if (!state.hasMore || state.isLoading) return;
 
@@ -143,7 +158,6 @@ class DocumentsNotifier extends StateNotifier<DocumentsState> {
   }
 }
 
-/// Documents provider
 final documentsProvider =
     StateNotifierProvider<DocumentsNotifier, DocumentsState>((ref) {
   final repository = ref.watch(documentRepositoryProvider);

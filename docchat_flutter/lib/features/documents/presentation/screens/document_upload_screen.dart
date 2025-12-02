@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
 import '../providers/documents_provider.dart';
 import '../widgets/upload_dropzone.dart';
 
-/// Document upload screen
 class DocumentUploadScreen extends ConsumerStatefulWidget {
   const DocumentUploadScreen({super.key});
 
@@ -14,7 +14,7 @@ class DocumentUploadScreen extends ConsumerStatefulWidget {
 }
 
 class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
-  int _currentNavIndex = 2; // Upload tab
+  int _currentNavIndex = 2;
   bool _isUploading = false;
 
   @override
@@ -24,7 +24,7 @@ class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
         title: const Text('Upload Document'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.go('/dashboard'),
         ),
         actions: [
           IconButton(
@@ -44,7 +44,6 @@ class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
               isUploading: _isUploading,
             ),
             const SizedBox(height: AppDimensions.spacing24),
-            // TODO: Add upload progress list here
           ],
         ),
       ),
@@ -61,18 +60,16 @@ class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
     });
 
     switch (index) {
-      case 0: // Home
-        // TODO: Navigate to home
-        Navigator.of(context).pop();
+      case 0:
+        context.go('/');
         break;
-      case 1: // Documents
-        Navigator.of(context).pop();
+      case 1:
+        context.go('/dashboard');
         break;
-      case 2: // Upload
-        // Already here
+      case 2:
         break;
-      case 3: // Settings
-        // TODO: Navigate to settings
+      case 3:
+        context.go('/settings');
         break;
     }
   }
@@ -93,8 +90,7 @@ class _DocumentUploadScreenState extends ConsumerState<DocumentUploadScreen> {
           ),
         );
         
-        // Navigate back to documents list
-        Navigator.of(context).pop();
+        context.go('/dashboard');
       }
     } catch (e) {
       if (mounted) {

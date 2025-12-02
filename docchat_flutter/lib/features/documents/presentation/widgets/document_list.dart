@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/documents_provider.dart';
 import 'document_card.dart';
 import '../../../../shared/widgets/loading_indicator.dart';
@@ -13,6 +14,14 @@ class DocumentList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(documentsProvider);
     final notifier = ref.read(documentsProvider.notifier);
+
+    if (!state.isAuthenticated) {
+      return EmptyState(
+        icon: Icons.login,
+        title: 'Please sign in',
+        message: 'Sign in to view your documents',
+      );
+    }
 
     if (state.isLoading && state.documents.isEmpty) {
       return const Center(child: LoadingIndicator());
@@ -40,7 +49,6 @@ class DocumentList extends ConsumerWidget {
         itemCount: state.documents.length + (state.hasMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index == state.documents.length) {
-            // Load more trigger
             WidgetsBinding.instance.addPostFrameCallback((_) {
               notifier.loadMore();
             });
@@ -56,11 +64,12 @@ class DocumentList extends ConsumerWidget {
           return DocumentCard(
             document: document,
             onTap: () {
-              // Navigate to document detail or chat
-              // TODO: Implement navigation
+              context.go('/chat', extra: {
+                'documentId': document.id,
+                'title': document.name,
+              });
             },
             onDelete: () {
-              // Show delete confirmation
               showDialog(
                 context: context,
                 builder: (dialogContext) => AlertDialog(
